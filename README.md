@@ -4,6 +4,11 @@ A Matlab toolbox for mobility communication research
 ### Mobility Toolbox is free Open Source tool for researchers to easily generate and simulate mobility data, given configuration. 
 
 ---
+[![gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openrsct/mobilitytoolbox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![NPM version](https://img.shields.io/npm/v/mobilitytoolbox.svg?style=flat-square)](https://www.npmjs.com/package/mobilitytoolbox)
+[![Build](https://travis-ci.org/openrsct/mobilitytoolbox.svg?branch=master)](https://travis-ci.org/openrsct/mobilitytoolbox)
+[![codecov.io](https://codecov.io/github/openrsct/mobilitytoolbox/coverage.svg?branch=master)](https://codecov.io/github/openrsct/mobilitytoolbox?branch=master)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## What the toolbox supports
 - Generate mobility data
