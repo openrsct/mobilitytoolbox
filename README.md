@@ -1,4 +1,4 @@
-# mobilitytoolbox
+# Mobility Toolbox
 A Matlab toolbox for mobility communication research
 
 ### Mobility Toolbox is free Open Source tool for researchers to easily generate and simulate mobility data, given configuration. 
