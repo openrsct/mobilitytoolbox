@@ -1,0 +1,779 @@
+function [hpp] = AutoPingPongHelper(n_ind , tos )
+ind_1 = 2;
+ind_2 = 3;
+ind_3 = 4;
+ind_4 = 5;
+ind_5=  6;
+ind_6=  7;
+ind_7= 8;
+ind_8= 9;
+ind_9= 10;
+ind_10= 11;
+ind_11= 12;
+hpp=0; %Contador de handover ping pong
+%-------------------CALCULO HANDOVER PING PONG-----------------------------
+%After HO, calculate the number of HPP(ping pong handovers) and nHPP
+    s_ind_handover = size(n_ind); %tamanho do ind de handover
+
+switch tos
+    case 1
+        for g=1:s_ind_handover(1)
+     ind_c = n_ind(g,1);   
+     if(ind_c ~= n_ind(ind_1,1) ) 
+         if( ind_c == n_ind(ind_2 , 1))
+             hpp = hpp+1;
+         end      
+     end
+     if(ind_1 <= s_ind_handover(1)-1)
+      ind_1 = ind_1+1; 
+     end
+     if(ind_2 <= s_ind_handover(1)-1)
+      ind_2 = ind_1+1; 
+     end
+                
+        end % end for
+       
+    case 2
+        
+        for g=1:s_ind_handover(1)
+     ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+    
+    %Primeira condicao
+         if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+    %Segunda condicao
+         if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+             hpp = hpp+1; %conta um ping pong pra 1seg
+         end
+    %Terceira condicao
+         if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+            hpp = hpp+1; % conta ping pong para 2seg
+         end
+         end
+     if(ind_1 <= s_ind_handover(1)-1)
+      ind_1 = ind_1+1; 
+     end
+     if(ind_2 <= s_ind_handover(1)-1)
+      ind_2 = ind_1+1; 
+     end
+     if(ind_3 <= s_ind_handover(1)-1)
+      ind_3 = ind_2+1; 
+     end
+        
+        end % end for
+     
+    case 3 
+        
+         for g=1:s_ind_handover(1)
+     ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+    
+    %Primeira condicao
+         if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+    %Segunda condicao
+         if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+             hpp = hpp+1; %conta um ping pong pra 1seg
+         end
+    %Terceira condicao
+         if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+            hpp = hpp+1; % conta ping pong para 2seg
+         end
+    %Quarta condicao
+         if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+            n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+            hpp = hpp+1; % conta ping pong para 3seg
+         end         
+         end % end if
+         
+     if(ind_1 <= s_ind_handover(1)-1)
+      ind_1 = ind_1+1; 
+     end
+     if(ind_2 <= s_ind_handover(1)-1)
+      ind_2 = ind_1+1; 
+     end
+     if(ind_3 <= s_ind_handover(1)-1)
+      ind_3 = ind_2+1; 
+     end
+     if(ind_4 <= s_ind_handover(1)-1)
+      ind_4 = ind_3+1; 
+     end 
+         end % end for
+         
+    case 4
+        
+         for g=1:s_ind_handover(1)
+     ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+    
+    %Primeira condicao
+         if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+    %Segunda condicao
+         if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+             hpp = hpp+1; %conta um ping pong pra 1seg
+         end
+    %Terceira condicao
+         if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+            hpp = hpp+1; % conta ping pong para 2seg
+         end
+    %Quarta condicao
+         if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+            n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+            hpp = hpp+1; % conta ping pong para 3seg
+         end
+    %Quinta condicao
+         if(ind_c == n_ind(ind_5,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+           n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)... 
+           && n_ind(ind_2,1) == n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_4,1)...
+           && n_ind(ind_3,1) == n_ind(ind_4,1)
+           hpp = hpp+1; % conta ping pong para 4seg
+         end
+         end
+         
+     if(ind_1 <= s_ind_handover(1)-1)
+      ind_1 = ind_1+1; 
+     end
+     if(ind_2 <= s_ind_handover(1)-1)
+      ind_2 = ind_1+1; 
+     end
+     if(ind_3 <= s_ind_handover(1)-1)
+      ind_3 = ind_2+1; 
+     end
+     if(ind_4 <= s_ind_handover(1)-1)
+      ind_4 = ind_3+1; 
+     end 
+     if(ind_5 <= s_ind_handover(1)-1)
+      ind_5 = ind_4+1; 
+     end
+         end %end for
+         
+    case 5
+        
+        for g=1:s_ind_handover(1)
+            ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+            
+            %Primeira condicao
+            if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+                %Segunda condicao
+                if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+                    hpp = hpp+1; %conta um ping pong pra 1seg
+                end
+                %Terceira condicao
+                if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+                    hpp = hpp+1; % conta ping pong para 2seg
+                end
+                %Quarta condicao
+                if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+                    hpp = hpp+1; % conta ping pong para 3seg
+                end
+                %Quinta condicao
+                if(ind_c == n_ind(ind_5,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2,1) == n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_4,1)...
+                        && n_ind(ind_3,1) == n_ind(ind_4,1)
+                    hpp = hpp+1; % conta ping pong para 4seg
+                end
+                
+                %Sexta condicao
+                if(ind_c == n_ind(ind_6,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1))
+                    hpp = hpp+1; % conta ping pong para 5seg
+                end
+            end
+            if(ind_1 <= s_ind_handover(1)-1)
+                ind_1 = ind_1+1;
+            end
+            if(ind_2 <= s_ind_handover(1)-1)
+                ind_2 = ind_1+1;
+            end
+            if(ind_3 <= s_ind_handover(1)-1)
+                ind_3 = ind_2+1;
+            end
+            if(ind_4 <= s_ind_handover(1)-1)
+                ind_4 = ind_3+1;
+            end
+            if(ind_5 <= s_ind_handover(1)-1)
+                ind_5 = ind_4+1;
+            end
+            if(ind_6 <= s_ind_handover(1)-1)
+                ind_6 = ind_5+1;
+            end
+        end % end for
+        
+    case 6
+         for g=1:s_ind_handover(1)
+     ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+    
+    %Primeira condicao
+         if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+    %Segunda condicao
+         if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+             hpp = hpp+1; %conta um ping pong pra 1seg
+         end
+    %Terceira condicao
+         if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+            hpp = hpp+1; % conta ping pong para 2seg
+         end
+    %Quarta condicao
+         if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+            n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+            hpp = hpp+1; % conta ping pong para 3seg
+         end
+    %Quinta condicao
+         if(ind_c == n_ind(ind_5,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+           n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)... 
+           && n_ind(ind_2,1) == n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_4,1)...
+           && n_ind(ind_3,1) == n_ind(ind_4,1)
+           hpp = hpp+1; % conta ping pong para 4seg
+         end
+        
+    %Sexta condicao
+       if(ind_c == n_ind(ind_6,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+           && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+           && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+           && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+           && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+           && n_ind(ind_4 , 1) == n_ind(ind_5 , 1))
+           hpp = hpp+1; % conta ping pong para 5seg
+         end
+         
+    %Setima condicao
+      if(ind_c == n_ind(ind_7,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+           && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+           && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+           && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+           && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+           && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+           && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+           && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1))
+           hpp = hpp+1; % conta ping pong para 6seg
+         end
+         end
+         if(ind_1 <= s_ind_handover(1)-1)
+             ind_1 = ind_1+1;
+         end
+         if(ind_2 <= s_ind_handover(1)-1)
+             ind_2 = ind_1+1;
+         end
+         if(ind_3 <= s_ind_handover(1)-1)
+             ind_3 = ind_2+1;
+         end
+         if(ind_4 <= s_ind_handover(1)-1)
+             ind_4 = ind_3+1;
+         end
+         if(ind_5 <= s_ind_handover(1)-1)
+             ind_5 = ind_4+1;
+         end
+         if(ind_6 <= s_ind_handover(1)-1)
+             ind_6 = ind_5+1;
+         end
+         if(ind_7 <= s_ind_handover(1)-1)
+             ind_7 = ind_6+1;
+         end
+         end % end for
+         
+    case 7     
+        for g=1:s_ind_handover(1)
+            ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+            
+            %Primeira condicao
+            if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+                %Segunda condicao
+                if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+                    hpp = hpp+1; %conta um ping pong pra 1seg
+                end
+                %Terceira condicao
+                if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+                    hpp = hpp+1; % conta ping pong para 2seg
+                end
+                %Quarta condicao
+                if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+                    hpp = hpp+1; % conta ping pong para 3seg
+                end
+                %Quinta condicao
+                if(ind_c == n_ind(ind_5,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2,1) == n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_4,1)...
+                        && n_ind(ind_3,1) == n_ind(ind_4,1)
+                    hpp = hpp+1; % conta ping pong para 4seg
+                end
+                
+                %Sexta condicao
+                if(ind_c == n_ind(ind_6,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1))
+                    hpp = hpp+1; % conta ping pong para 5seg
+                end
+                
+                %Setima condicao
+                if(ind_c == n_ind(ind_7,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1))
+                    hpp = hpp+1; % conta ping pong para 6seg
+                end
+                %Oitava condicao
+                if(ind_c == n_ind(ind_8,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_6 , 1) && n_ind(ind_2 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1) && n_ind(ind_4 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_6 , 1) == n_ind(ind_7 , 1))
+                    hpp = hpp+1; % conta ping pong para 7seg
+                end
+                
+            end
+            if(ind_1 <= s_ind_handover(1)-1)
+                ind_1 = ind_1+1;
+            end
+            if(ind_2 <= s_ind_handover(1)-1)
+                ind_2 = ind_1+1;
+            end
+            if(ind_3 <= s_ind_handover(1)-1)
+                ind_3 = ind_2+1;
+            end
+            if(ind_4 <= s_ind_handover(1)-1)
+                ind_4 = ind_3+1;
+            end
+            if(ind_5 <= s_ind_handover(1)-1)
+                ind_5 = ind_4+1;
+            end
+            if(ind_6 <= s_ind_handover(1)-1)
+                ind_6 = ind_5+1;
+            end
+            
+            if(ind_7 <= s_ind_handover(1)-1)
+                ind_7 = ind_6+1;
+            end
+            
+            if(ind_8 <= s_ind_handover(1)-1)
+                ind_8 = ind_7+1;
+            end
+        end % end for
+    case 8
+        for g=1:s_ind_handover(1)
+            ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+            
+            %Primeira condicao
+            if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+                %Segunda condicao
+                if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+                    hpp = hpp+1; %conta um ping pong pra 1seg
+                end
+                %Terceira condicao
+                if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+                    hpp = hpp+1; % conta ping pong para 2seg
+                end
+                %Quarta condicao
+                if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+                    hpp = hpp+1; % conta ping pong para 3seg
+                end
+                %Quinta condicao
+                if(ind_c == n_ind(ind_5,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2,1) == n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_4,1)...
+                        && n_ind(ind_3,1) == n_ind(ind_4,1)
+                    hpp = hpp+1; % conta ping pong para 4seg
+                end
+                
+                %Sexta condicao
+                if(ind_c == n_ind(ind_6,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1))
+                    hpp = hpp+1; % conta ping pong para 5seg
+                end
+                
+                %Setima condicao
+                if(ind_c == n_ind(ind_7,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1))
+                    hpp = hpp+1; % conta ping pong para 6seg
+                end
+                %Oitava condicao
+                if(ind_c == n_ind(ind_8,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_6 , 1) && n_ind(ind_2 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1) && n_ind(ind_4 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_6 , 1) == n_ind(ind_7 , 1))
+                    hpp = hpp+1; % conta ping pong para 7seg
+                end
+                %Nona condicao
+                if(ind_c == n_ind(ind_9,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_1 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_7 , 1) && n_ind(ind_2 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_8 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_8 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_6 , 1) == n_ind(ind_7 , 1) && n_ind(ind_6 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_7 , 1) == n_ind(ind_8 , 1))
+                    hpp = hpp+1; % conta ping pong para 8seg
+                end
+            end
+            if(ind_1 <= s_ind_handover(1)-1)
+                ind_1 = ind_1+1;
+            end
+            if(ind_2 <= s_ind_handover(1)-1)
+                ind_2 = ind_1+1;
+            end
+            if(ind_3 <= s_ind_handover(1)-1)
+                ind_3 = ind_2+1;
+            end
+            if(ind_4 <= s_ind_handover(1)-1)
+                ind_4 = ind_3+1;
+            end
+            if(ind_5 <= s_ind_handover(1)-1)
+                ind_5 = ind_4+1;
+            end
+            if(ind_6 <= s_ind_handover(1)-1)
+                ind_6 = ind_5+1;
+            end
+            if(ind_7 <= s_ind_handover(1)-1)
+                ind_7 = ind_6+1;
+            end
+            if(ind_8 <= s_ind_handover(1)-1)
+                ind_8 = ind_7+1;
+            end
+            if(ind_9 <= s_ind_handover(1)-1)
+                ind_9 = ind_8+1;
+            end
+        end % end for
+    case 9
+        for g=1:s_ind_handover(1)
+            ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+            
+            %Primeira condicao
+            if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+                %Segunda condicao
+                if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+                    hpp = hpp+1; %conta um ping pong pra 1seg
+                end
+                %Terceira condicao
+                if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+                    hpp = hpp+1; % conta ping pong para 2seg
+                end
+                %Quarta condicao
+                if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+                    hpp = hpp+1; % conta ping pong para 3seg
+                end
+                %Quinta condicao
+                if(ind_c == n_ind(ind_5,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2,1) == n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_4,1)...
+                        && n_ind(ind_3,1) == n_ind(ind_4,1)
+                    hpp = hpp+1; % conta ping pong para 4seg
+                end
+                
+                %Sexta condicao
+                if(ind_c == n_ind(ind_6,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1))
+                    hpp = hpp+1; % conta ping pong para 5seg
+                end
+                
+                %Setima condicao
+                if(ind_c == n_ind(ind_7,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1))
+                    hpp = hpp+1; % conta ping pong para 6seg
+                end
+                %Oitava condicao
+                if(ind_c == n_ind(ind_8,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_6 , 1) && n_ind(ind_2 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1) && n_ind(ind_4 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_6 , 1) == n_ind(ind_7 , 1))
+                    hpp = hpp+1; % conta ping pong para 7seg
+                end
+                %Nona condicao
+                if(ind_c == n_ind(ind_9,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_1 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_7 , 1) && n_ind(ind_2 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_8 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_8 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_6 , 1) == n_ind(ind_7 , 1) && n_ind(ind_6 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_7 , 1) == n_ind(ind_8 , 1))
+                    hpp = hpp+1; % conta ping pong para 8seg
+                end
+                %Decima condicao
+                if(ind_c == n_ind(ind_10,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_1 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_9 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_6 , 1) && n_ind(ind_2 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_8 , 1) && n_ind(ind_2 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_8 , 1) && n_ind(ind_3 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1) && n_ind(ind_4 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_7 , 1) && n_ind(ind_4 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_9 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_9 , 1) && n_ind(ind_6 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_6 , 1) == n_ind(ind_8 , 1) && n_ind(ind_6 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_7 , 1) == n_ind(ind_8 , 1) && n_ind(ind_7 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_8 , 1) == n_ind(ind_9 , 1))
+                    hpp = hpp+1; % conta ping pong para 9seg
+                end
+            end
+            if(ind_1 <= s_ind_handover(1)-1)
+                ind_1 = ind_1+1;
+            end
+            if(ind_2 <= s_ind_handover(1)-1)
+                ind_2 = ind_1+1;
+            end
+            if(ind_3 <= s_ind_handover(1)-1)
+                ind_3 = ind_2+1;
+            end
+            if(ind_4 <= s_ind_handover(1)-1)
+                ind_4 = ind_3+1;
+            end
+            if(ind_5 <= s_ind_handover(1)-1)
+                ind_5 = ind_4+1;
+            end
+            if(ind_6 <= s_ind_handover(1)-1)
+                ind_6 = ind_5+1;
+            end
+            
+            if(ind_7 <= s_ind_handover(1)-1)
+                ind_7 = ind_6+1;
+            end
+            if(ind_8 <= s_ind_handover(1)-1)
+                ind_8 = ind_7+1;
+            end
+            if(ind_9 <= s_ind_handover(1)-1)
+                ind_9 = ind_8+1;
+            end
+            if(ind_10 <= s_ind_handover(1)-1)
+                ind_10 = ind_9+1;
+            end
+        end % end for
+    case 10
+        for g=1:s_ind_handover(1)
+            ind_c = n_ind(g,1); %atribui�ao do indice atual (ind_c= � o indice atual)
+            
+            %Primeira condicao
+            if(ind_c ~= n_ind(ind_1,1) ) %ind_1= (indicePos2)
+                %Segunda condicao
+                if( ind_c == n_ind(ind_2 , 1)) %se indice atual = (indicePos3)
+                    hpp = hpp+1; %conta um ping pong pra 1seg
+                end
+                %Terceira condicao
+                if(ind_c == n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1))
+                    hpp = hpp+1; % conta ping pong para 2seg
+                end
+                %Quarta condicao
+                if(ind_c == n_ind(ind_4,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_3,1)
+                    hpp = hpp+1; % conta ping pong para 3seg
+                end
+                %Quinta condicao
+                if(ind_c == n_ind(ind_5,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)) &&...
+                        n_ind(ind_1,1)== n_ind(ind_3,1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2,1) == n_ind(ind_3,1) && n_ind(ind_2,1) == n_ind(ind_4,1)...
+                        && n_ind(ind_3,1) == n_ind(ind_4,1)
+                    hpp = hpp+1; % conta ping pong para 4seg
+                end
+                
+                %Sexta condicao
+                if(ind_c == n_ind(ind_6,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1))
+                    hpp = hpp+1; % conta ping pong para 5seg
+                end
+                
+                %Setima condicao
+                if(ind_c == n_ind(ind_7,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1))
+                    hpp = hpp+1; % conta ping pong para 6seg
+                end
+                %Oitava condicao
+                if(ind_c == n_ind(ind_8,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_6 , 1) && n_ind(ind_2 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1) && n_ind(ind_4 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_6 , 1) == n_ind(ind_7 , 1))
+                    hpp = hpp+1; % conta ping pong para 7seg
+                end
+                %Nona condicao
+                if(ind_c == n_ind(ind_9,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_1 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_3 , 1) && n_ind(ind_2 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_5 , 1) && n_ind(ind_2 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_7 , 1) && n_ind(ind_2 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_8 , 1) && n_ind(ind_4 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_6 , 1) && n_ind(ind_4 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_8 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_6 , 1) == n_ind(ind_7 , 1) && n_ind(ind_6 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_7 , 1) == n_ind(ind_8 , 1))
+                    hpp = hpp+1; % conta ping pong para 8seg
+                end
+                %Decima condicao
+                if(ind_c == n_ind(ind_10,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_1 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_9 , 1) && n_ind(ind_2 , 1) == n_ind(ind_3 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_6 , 1) && n_ind(ind_2 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_8 , 1) && n_ind(ind_2 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_4 , 1) && n_ind(ind_3 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_6 , 1) && n_ind(ind_3 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_8 , 1) && n_ind(ind_3 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1) && n_ind(ind_4 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_7 , 1) && n_ind(ind_4 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_9 , 1) && n_ind(ind_5 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_7 , 1) && n_ind(ind_5 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_9 , 1) && n_ind(ind_6 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_6 , 1) == n_ind(ind_8 , 1) && n_ind(ind_6 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_7 , 1) == n_ind(ind_8 , 1) && n_ind(ind_7 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_8 , 1) == n_ind(ind_9 , 1))
+                    hpp = hpp+1; % conta ping pong para 9seg
+                end
+                %Decima_primeira condicao
+                if(ind_c == n_ind(ind_11,1) && n_ind(ind_1 , 1) == n_ind(ind_2 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_3 , 1) && n_ind(ind_1 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_5 , 1) && n_ind(ind_1 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_7 , 1) && n_ind(ind_1 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_1 , 1) == n_ind(ind_9 , 1) && n_ind(ind_1 , 1) == n_ind(ind_10 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_4 , 1) && n_ind(ind_2 , 1) == n_ind(ind_5 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_6 , 1) && n_ind(ind_2 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_8 , 1) && n_ind(ind_2 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_2 , 1) == n_ind(ind_10 , 1) && n_ind(ind_3 , 1) == n_ind(ind_4 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_5 , 1) && n_ind(ind_3 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_7 , 1) && n_ind(ind_3 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_3 , 1) == n_ind(ind_9 , 1) && n_ind(ind_3 , 1) == n_ind(ind_10 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_5 , 1) && n_ind(ind_4 , 1) == n_ind(ind_6 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_7 , 1) && n_ind(ind_4 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_4 , 1) == n_ind(ind_9 , 1) && n_ind(ind_4 , 1) == n_ind(ind_10 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_6 , 1) && n_ind(ind_5 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_5 , 1) == n_ind(ind_8 , 1) && n_ind(ind_5 , 1) == n_ind(ind_9 , 1) ...
+                        && n_ind(ind_5 , 1) == n_ind(ind_10 , 1) && n_ind(ind_6 , 1) == n_ind(ind_7 , 1)...
+                        && n_ind(ind_6 , 1) == n_ind(ind_8 , 1) && n_ind(ind_6 , 1) == n_ind(ind_9 , 1)...
+                        && n_ind(ind_6 , 1) == n_ind(ind_10 , 1) && n_ind(ind_7 , 1) == n_ind(ind_8 , 1)...
+                        && n_ind(ind_7 , 1) == n_ind(ind_9 , 1) && n_ind(ind_7 , 1) == n_ind(ind_10 , 1)...
+                        && n_ind(ind_8 , 1) == n_ind(ind_9 , 1) && n_ind(ind_8 , 1) == n_ind(ind_10 , 1)...
+                        && n_ind(ind_9 , 1) == n_ind(ind_10 , 1))
+                    hpp = hpp+1; % conta ping pong para 10seg
+                end
+                
+            end
+            if(ind_1 <= s_ind_handover(1)-1)
+                ind_1 = ind_1+1;
+            end
+            if(ind_2 <= s_ind_handover(1)-1)
+                ind_2 = ind_1+1;
+            end
+            if(ind_3 <= s_ind_handover(1)-1)
+                ind_3 = ind_2+1;
+            end
+            if(ind_4 <= s_ind_handover(1)-1)
+                ind_4 = ind_3+1;
+            end
+            if(ind_5 <= s_ind_handover(1)-1)
+                ind_5 = ind_4+1;
+            end
+            if(ind_6 <= s_ind_handover(1)-1)
+                ind_6 = ind_5+1;
+            end
+            if(ind_7 <= s_ind_handover(1)-1)
+                ind_7 = ind_6+1;
+            end
+            if(ind_8 <= s_ind_handover(1)-1)
+                ind_8 = ind_7+1;
+            end
+            if(ind_9 <= s_ind_handover(1)-1)
+                ind_9 = ind_8+1;
+            end
+            if(ind_10 <= s_ind_handover(1)-1)
+                ind_10 = ind_9+1;
+            end
+            if(ind_11 <= s_ind_handover(1)-1)
+                ind_11 = ind_10+1;
+            end
+        end % end for
+    otherwise
+    disp('Invalid option')  
+end
+
+end
