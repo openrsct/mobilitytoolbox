@@ -269,3 +269,56 @@ net = MobilityNetwork; % Constructor of class
 
 ```
 
+
+#### Calculate Channel Capacity
+
+ Calculate the throughput in the Shannon-Hartley theorem for channel capacity
+ **Input:** 
+
+ **SINR_femto_macro_w** => Concatented SINR matrix of ENB and HENB<br>
+ **out_handover_sinr_op** => SINR of Handover Opportunistic result   
+
+ **Output:** 
+
+ **channel_capacity** => Throughput calculated (per user)<br>
+ 
+
+```matlab
+
+net = MobilityNetwork; % Constructor of class
+
+channel_capacity = net.channelCapacity( SINR_femto_macro_w , out_handover_sinr_OP)
+
+```
+
+
+### Class Handover
+
+This class inherites from MobilityNetwork.
+
+#### Class Properties
+
+```matlab
+HYSTERESIS = 2; % Hysteresis
+     % Parameters of Topsis
+    RSRP_MIN = -135; % Max value of RSRP for use in Handover TOPSIS
+    RSRP_MAX = -13; % Min value of RSRP for use in Handover TOPSIS
+    %Channel
+    CHANNEL_CAPACITY_MIN = -10*10^8; % Min value of Channel Capacity for use in Handover TOPSIS
+    CHANNEL_CAPACITY_MAX = 13*10^8; % Max value of Channel Capacity for use in Handover TOPSIS
+    %SINR
+    SINR_MIN = -130; % Min value of SINR for use in Handover TOPSIS
+    SINR_MAX = 75; % Max value of Channel Capacity for use in Handover TOPSIS
+    
+    % Literals Definition for Topsis
+    LITERAL_VERY_LOW    =   [0   0.05   0.1625];          % Literal definition of very low rule 
+    LITERAL_LOW         =   [0.0525   0.15   0.2925];     % Literal definition of  low rule
+    LITERAL_MEDIUM      =   [0.1225    0.2500    0.4225]; % Literal definition of medium rule
+    LITERAL_HIGH        =   [0.1925    0.3500    0.5525]; % Literal definition of high rule
+    LITERAL_VERY_HIGH   =   [0.2625    0.4500    0.6500]; % Literal definition of very rule
+
+```
+
+#### Class Methods
+
+(Coming Soon...)
