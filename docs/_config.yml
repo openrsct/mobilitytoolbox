@@ -1,0 +1,17 @@
+title: Mobility Toolbox
+description: A Open Source Matlab toolbox for mobility generation and simulation data.
+show_downloads: true
+google_analytics:
+theme:
+version: 0.0.1
+ 
+github: {
+      is_project_page: true,
+      repository_name: mobilitytoolbox,
+      owner_url: github.com/imperiumzigna,
+      owner_name: Igor Amorim Silva,
+      repository_url: "https://github.com/openrsct/mobilitytoolbox",
+      zip_url: "https://github.com/openrsct/mobilitytoolbox/archive/v0.0.1.zip",
+      tar_url: "https://github.com/openrsct/mobilitytoolbox/archive/v0.0.1.tar.gz"
+    }
+ 
