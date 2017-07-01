@@ -2,7 +2,7 @@ title: Mobility Toolbox
 description: A Open Source Matlab toolbox for mobility generation and simulation data.
 show_downloads: true
 google_analytics:
-theme:
+theme: jekyll-theme-cayman
 version: 0.0.1
  
 github: {
