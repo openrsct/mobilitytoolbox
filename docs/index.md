@@ -40,7 +40,9 @@ Here is a list of current operations supported by the tool:
 * Example 1: doc MobilityGenerator
 * Example 2: help MobilityGenerator
 
+## Author Notes:
 
+1. For convention a **cell** refers to a HENB or ENB while **Cell** refers to the Matlab Cell data type.
 
 
 ###  Generate Mobility data
@@ -86,13 +88,13 @@ Here is a list of the public properties of the MobilityNetwork class:
     NUMBER_OF_FLOORS_BUILDING = 1;
     %Parameters of eNB
     RESOURCE_BLOCK = 25;%5mhz-25;resource block 
-    POWER_TX_ENB_DBM = 43;%27/46; dBm Transmitting Power of eNB
+    POWER_TX_ENB_DBm = 43;%27/46; DBm Transmitting Power of eNB
     GAIN_TX = 12; %16dBi Antenna Gain
     CABLELOSS = 3; %dB Cable Loss
     NOISE = 0; %w noise
     
     %Parameters of HenB
-    POWER_TX_FEMTO =20; %15/23;dBm Transmitting Power of HeNB
+    POWER_TX_FEMTO =20; %15/23;DBm Transmitting Power of HeNB
     GAIN_TX_FEMTO=2; %2%dBi Antenna Gain
     BW = 25; % Bandwidth, number of RBs => 5 MHz = 25 PRBs  %20Mhz-100RBs
     NOISE_FEMTO = 0; %w Noise
@@ -109,11 +111,11 @@ Here is a list of the public properties of the MobilityNetwork class:
 
   net.getPowerHenbFemtoWatts(); % Returns Power of HENB in Watts
 
-  net.getPowerHenbFemtoDbm(); % Returns Power of HENB in Dbm
+  net.getPowerHenbFemtoDBm(); % Returns Power of HENB in DBm
 
   net.getPowerEnbWatts(); % Returns Power of ENB in Watts
 
-  net.getPowerEnbDbm(); % Returns Power of ENB in Dbm
+  net.getPowerEnbDBm(); % Returns Power of ENB in DBm
 
   net.getNumberSubcarriers() % Returns number of subcarriers
 
@@ -133,17 +135,17 @@ Here is a list of the public properties of the MobilityNetwork class:
 
   net.setPowerHenbFemtoWatts(POWER_TX_WATTS , NUMBER_SUBCARRIERS); % Set Power of Henb in Watts
 
-  net.setPowerHenbFemtoDbm(POWER_HENB_FEMTO_WATTS); % Set Power of HENB in Dbm
+  net.setPowerHenbFemtoDBm(POWER_HENB_FEMTO_WATTS); % Set Power of HENB in DBm
 
   net.setPowerEnbWatts(NUMBER_SUBCARRIERS, POWER_TX_WATTS); % Set Power of ENB in Watts
 
-  net.setPowerEnbDbm(POWER_ENB_WATTS); % Set Power of ENB in Dbm
+  net.setPowerEnbDBm(POWER_ENB_WATTS); % Set Power of ENB in DBm
 
   net.setNumberSubcarriers(BANDWIDTH) % Set number of subcarriers
 
   net.setPowerTxWattsFemto(POWER_TX_FEMTO) % Set Power Tx of HENB  in Watts
 
-  net.setPowerTxWatts(POWER_TX_ENB_DBM) % Set Power Tx of ENB in Watts
+  net.setPowerTxWatts(POWER_TX_ENB_DBm) % Set Power Tx of ENB in Watts
 
   
 ```
@@ -162,7 +164,7 @@ Here is a list of the public properties of the MobilityNetwork class:
 
  **Output:** 
 
- **RSRP_femto** => RSRP of femtocells (HENB) in Dbm<br>
+ **RSRP_femto** => RSRP of femtocells (HENB) in DBm<br>
  **RSRP_femtos_w** => RSRP of femtocells (HENB) in Watts<br>
  **dists_femtos** => Calculated euclidean distance of user to HENB in each second<br>
  **loss_femtos** => Pathloss of cells to user
@@ -187,7 +189,7 @@ net = MobilityNetwork; % Constructor of class
 
  **Output:** 
 
- **RSRP_macro** => RSRP of macrocells (ENB) in Dbm<br>
+ **RSRP_macro** => RSRP of macrocells (ENB) in DBm<br>
  **RSRP_macro_w** => RSRP of macrocells (ENB) in Watts<br>
  **dists_macro** => Calculated euclidean distance of user to ENB in each second<br>
  **loss_macro** => Pathloss of cells to user
@@ -235,7 +237,7 @@ net = MobilityNetwork; % Constructor of class
  **Output:** 
 
  **RSRQ_femto_macro_w** => RSRQ calculated in Watts<br>
- **RSRQ_femto_macro** => RSSQ calculated in Dbm
+ **RSRQ_femto_macro** => RSSQ calculated in DBm
 
 
 ```matlab
@@ -258,7 +260,7 @@ net = MobilityNetwork; % Constructor of class
  **Output:** 
 
  **SINR_femto_macro_w** => SINR calculated in Watts<br>
- **SINR_femto_macro** => SINR calculated in Dbm
+ **SINR_femto_macro** => SINR calculated in DBm
 
 
 ```matlab
@@ -290,6 +292,201 @@ net = MobilityNetwork; % Constructor of class
 channel_capacity = net.channelCapacity( SINR_femto_macro_w , out_handover_sinr_OP)
 
 ```
+### Class Connection
+
+This class inherites from MobilityNetwork.
+
+#### Class Properties
+
+```matlab
+
+  LIMITER => limit the number of HENB visible per user
+
+```
+
+#### Class Methods
+
+#### Get user connections with RSRP
+
+**Input:** 
+
+ **RSRP_femto** => RSRP of HENB in DBm. Calculated with MobilityNetwork lass <br>
+ **RSRP_macro** => RSRP of ENB in DBm. Calculated  with MobilityNetwork class  <br>
+ **RSRP_femto_w** => RSRP of HENB in Watts.   <br>
+ **RSRP_macro_w** => RSRP of ENB in DBm. Calculated  with MobilityNetwork class <br>
+
+ **Output:** 
+
+**indexes_femto_macro** => Cell Matrix of original positions of values for each user<br>
+**conected_femto_macro** => Cell Matrix RSRP in DBm values sorted<br>
+**indexes_femto_macro_w** => Cell Matrix of original positions of values for each user<br>
+**conected_femto_macro_w** => Cell Matrix RSRP in Watts values sorted for each user<br>
+
+
+```matlab
+
+  conn = MobilityConnection; % Class constructor
+  
+  % Function that returns for each second the best RSRP sorting the matrix with all macro and femtocells
+
+  [indexes_femto_macro, conected_femto_macro, indexes_femto_macro_w, conected_femto_macro_w ] = conectionsRSRP(RSRP_femto , RSRP_macro,RSRP_femto_w , RSRP_macro_w)
+
+```
+
+
+#### Select initial connected cell of user given RSRP
+
+**Input:** 
+
+ **connected_femto_macro** => Cell Matrix RSRP in DBm values sorted <br>
+
+ **indexes_femto_macro** => RSRP of HENB in DBm. Calculated with MobilityNetwork lass <br>
+
+ **Output:** 
+
+**initia_cell** => Cell Matrix of original positions of values for each user<br>
+**index_initial_cell** => Cell Matrix RSRP in DBm values sorted<br>
+
+
+
+```matlab
+  %   Select the most appropriate cell for a UE to camp
+  %   Camp on servingcell- The cell with the highest RSRP in the measurement set
+  [initial_cell, index_initial_cell] = conn.cellSelectionRSRP(conected_femto_macro, indexes_femto_macro)  
+```
+
+
+#### Get user connections with SINR
+
+**Input:** 
+
+ **SINR_femto_macro** => SINR of ENB and HENB in DBm. Calculated with MobilityNetwork lass <br>
+
+
+ **Output:** 
+
+**indexes_femto_macro_SINR** => Cell Matrix of original positions of values for each user<br>
+**conected_femto_macro_SINR** => Cell Matrix SINR in DBm values sorted for each user<br>
+
+
+```matlab
+
+  conn = MobilityConnection; % Class constructor
+  
+  % Function that returns for each second the best SINR sorting the matrix with all macro and femtocells
+[indexes_femto_macro_SINR, conected_femto_macro_SINR] = conn.conectionsSINR(SINR_femto_macro)
+  
+
+```
+
+
+#### Select initial connected cell of user given SINR
+
+**Input:** 
+
+ **connected_femto_macro** => Cell Matrix SINR in DBm values sorted <br>
+
+ **indexes_femto_macro** => SINR of HENB in DBm. Calculated with MobilityNetwork lass <br>
+
+ **Output:** 
+
+**initia_cell** => Cell Matrix of original positions of values for each user<br>
+**index_initial_cell** => Cell Matrix SINR in DBm values sorted<br>
+
+
+
+```matlab
+  %   Select the most appropriate cell for a UE to camp
+  %   Camp on servingcell- The cell with the highest SINR in the measurement set
+  [initial_cell, index_initial_cell] = conn.cellSelectionSINR(conected_femto_macro, indexes_femto_macro)  
+``` 
+
+#### Get user connections with RSRQ
+
+**Input:** 
+
+ **RSRQ_femto_macro** => RSRQ of ENB and HENB in DBm. Calculated with MobilityNetwork lass <br>
+
+
+ **Output:** 
+
+**indexes_femto_macro_RSRQ** => Cell Matrix of original positions of values for each user<br>
+**conected_femto_macro_RSRQ** => Cell Matrix RSRQ in DBm values sorted for each user<br>
+
+
+```matlab
+
+  conn = MobilityConnection; % Class constructor
+  
+  % Function that returns for each second the best RSRQ sorting the matrix with all macro and femtocells
+[indexes_femto_macro_RSRQ, conected_femto_macro_RSRQ] = conn.conectionsRSRQ(RSRQ_femto_macro)
+```
+
+
+#### Select initial connected cell of user given RSRQ
+
+**Input:** 
+
+ **connected_femto_macro_RSRQ** => Cell Matrix RSRQ in DBm values sorted <br>
+
+ **indexes_femto_macro_RSRQ** => RSRQ of HENB in DBm. Calculated with MobilityNetwork lass <br>
+
+ **Output:** 
+
+**initia_cell** => Cell Matrix of original positions of values for each user<br>
+**index_initial_cell** => Cell Matrix RSRQ in DBm values sorted<br>
+
+
+
+```matlab
+  %   Select the most appropriate cell for a UE to camp
+  %   Camp on servingcell- The cell with the highest RSRQ in the measurement set
+  [initial_cell, index_initial_cell] = conn.cellSelectionRSRQ(conected_femto_macro_RSRQ, indexes_femto_macro_RSRQ); 
+```   
+
+#### Get user connections with Channel Capacity
+
+**Input:** 
+
+ **ChannelCapacity_femto_macro** => Channel Capacity of ENB and HENB. Calculated with MobilityNetwork lass <br>
+
+
+ **Output:** 
+
+**indexes_femto_macro_ChannelCapacity** => Cell Matrix of original positions of values for each user<br>
+**conected_femto_macro_ChannelCapacity** => Cell Matrix of Channel Capacity values sorted for each user<br>
+
+
+```matlab
+
+  conn = MobilityConnection; % Class constructor
+  
+  % Function that returns for each second the best Channel Capacity sorting the matrix with all macro and femtocells
+[indexes_femto_macro_ChannelCapacity, conected_femto_macro_ChannelCapacity] = conn.conectionsChannelCapacity(ChannelCapacity_femto_macro);
+```
+
+
+#### Select initial connected cell of user given Channel Capacity
+
+**Input:** 
+
+ **conected_femto_macro_ChannelCapacity** => Cell Matrix Channel Capacity values sorted <br>
+
+ **indexes_femto_macro** => Channel Capacity of HENB in DBm. Calculated with MobilityNetwork lass <br>
+
+ **Output:** 
+
+**initia_cell** => Cell Matrix of original positions of values for each user<br>
+**index_initial_cell** => Cell Matrix Channel Capacity values sorted<br>
+
+
+
+```matlab
+  %   Select the most appropriate cell for a UE to camp
+  %   Camp on servingcell- The cell with the highest Channel Capacity in the measurement set
+  [initial_cell, index_initial_cell] = cellSelectionChannelCapacity(obj,conected_femto_macro_ChannelCapacity, indexes_femto_macro);  
+```   
+
 
 
 ### Class Handover
@@ -321,4 +518,59 @@ HYSTERESIS = 2; % Hysteresis
 
 #### Class Methods
 
-(Coming Soon...)
+#### Calculate Handover A3 Event
+
+**Input**
+
+**RSRP_femto_macro**  => Calculated RSRP in DBm. <br><br>
+**RSRQ_femto_macro**  => Calculated RSRQ in DBm.<br><br>
+**SINR_femto_macro**  => Calculated SINR in DBm.<br><br>
+**initial_cell_RSRP**  => Values of RSRP user initially connected.  <br><br>
+**initial_cell_RSRQ**  => Values of RSRQ user initially connected. <br><br>
+**initial_cell_SINR**  => Values of SINR user initially connected. <br><br>
+**index_initial_cell_RSRP**  => Original positions connected RSRP <br><br>
+**index_initial_cell_RSRQ**  => Original positions connected RSRQ <br><br>
+**index_initial_cell_SINR**  => Original positions connected SINR <br><br>
+
+**Output**
+
+**handoverOut** => Struct with evaluated data
+
+> Data description of handoverOut:
+
+OUT_HANDOVER_RSRP  => RSRP values where a handover was counted <br><br>
+OUT_HANDOVER_RSRQ  => RSRQ values where a handover was counted <br><br>
+OUT_HANDOVER_SINR  => SINR values where a handover was counted <br><br>
+INDEX_HANDOVER_RSRP => Index of HENB or ENB on RSRP atrix where user made handover <br><br>
+INDEX_HANDOVER_SINR => Index of HENB or ENB on SINR atrix where user made handover <br><br>
+INDEX_HANDOVER_RSRQ => Index of HENB or ENB on RSRQ atrix where user made handover  <br><br>
+TOTAL_HANDOVER_COUNT => Total number of handovers for each users <br><br>
+TOTAL_HANDOVER_FAILURE => Total number of handover failure for each user   <br><br>
+TOTAL_HANDOVER_PING_PONG => Total number of handover ping pong <br><br>
+TOTAL_NOT_HANDOVER_PING_PONG => Total number of handover not ping pong  <br><br>
+
+
+| OUT_HANDOVER_RSRP | OUT_HANDOVER_RSRQ| OUT_HANDOVER_SINR | INDEX_HANDOVER_RSRP | INDEX_HANDOVER_SINR |  INDEX_HANDOVER_RSRQ | TOTAL_HANDOVER_COUNT | TOTAL_HANDOVER_FAILURE | TOTAL_HANDOVER_PING_PONG | TOTAL_NOT_HANDOVER_PING_PONG | 
+|-------------------|---------------------|---------------------|---------------------|---------------------|-------------------|---------------------|--------------------|--------------------------|------------------------------|
+| Cell Array| Cell Array| Cell Array| Cell Array| Cell Array| Cell Array| Cell Array| Cell Array| Cell Array| Cell Array|
+
+```matlab
+hand = MobilityHandover; % Class constructor;
+
+handoverOut = hand.handoverA3(Input); % Cited variables in input
+
+```
+
+#### Calculate handover with Fuzzy 
+
+Documentation Soon.
+
+
+#### Calculate handover with TOPSIS 
+
+Documentation Soon.
+
+
+#### Calculate handover with CRE 
+
+Documentation Soon.

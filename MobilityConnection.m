@@ -62,17 +62,18 @@ methods
     end
 
 
-    function [initial_cell, index_initial_cell] = cellSelectionChannelCapacity(obj,conected_femto_macro, indexes_femto_macro)
+    function [initial_cell, index_initial_cell] = cellSelectionChannelCapacity(obj,conected_femto_macro_ChannelCapacity, indexes_femto_macro)
     %  Function Cell Selection Channel Capacity
     %  Description: Function to select the most appropriate cell for a UE to camp
     %  Camp on servingcell- The cell with the highest Channel Capacity in the measurement set
     %  
     %  Input---
-    %  =>conected_femto_macro_ChannelCapacity
-    %  
+    %  => conected_femto_macro_ChannelCapacity
+    %  => indexes_femto_macro_ChannelCapacity
     %  Output---
-    %  =>initial_cel: The serving cell selected for each user in the first second
-        [initial_cell, index_initial_cell] = CellSeletionChannelCapacityHelper(conected_femto_macro, indexes_femto_macro);
+    %  => initial_cel: The serving cell selected for each user in the first second
+    %  => index_initial_cell
+        [initial_cell, index_initial_cell] = CellSeletionChannelCapacityHelper(conected_femto_macro_ChannelCapacity, indexes_femto_macro);
     end
 
     function [indexes_femto_macro_ChannelCapacity, conected_femto_macro_ChannelCapacity] = conectionsChannelCapacity(obj, ChannelCapacity_femto_macro)
@@ -99,7 +100,7 @@ methods
     end
 
     function [indexes_femto_macro, conected_femto_macro, indexes_femto_macro_w, conected_femto_macro_w ] = conectionsRSRP(obj,RSRP_femto , RSRP_macro,RSRP_femto_w , RSRP_macro_w)
-    %   Function Conection SINR
+    %   Function Conection RSRP
     %   Description: Function that returns for each second the best RSRP
     %   sorting the matrix with all macro and femtocells
     %  
@@ -110,6 +111,11 @@ methods
      [indexes_femto_macro, conected_femto_macro, indexes_femto_macro_w, conected_femto_macro_w ] = ConectionsRSRPHelper(obj,RSRP_femto , RSRP_macro,RSRP_femto_w , RSRP_macro_w);
 
     end
+    
+    function [indexes_femto_macro_RSRQ, conected_femto_macro_RSRQ] = conectionsRSRQ(obj,RSRQ_femto_macro)
+     % Doc soon
+     [indexes_femto_macro_RSRQ, conected_femto_macro_RSRQ] = ConnecionsRSRQHelper(obj,RSRQ_femto_macro);
+    end    
 end
 
 end
