@@ -1,0 +1,6 @@
+function range = plotCircleHelper(x,y,radius)
+range = rectangle('Position',[x - radius, y - radius, radius*2, radius*2],...
+    'Curvature',[1,1],...
+    'FaceColor','none');
+axis square;
+end

@@ -2,7 +2,7 @@
 % Description:  Function to generate mobility(N of nodes, speed..)
 % for all users considering the 'random waypoint mobility model'
 % output: Prove animacao atraves da funcao Config_Anim
-function s_mobility = randomWaypoint(s_input)
+function s_mobility = randomWaypointHelper(s_input)
     %The Random Waypoint mobility model.
     global s_mobility_tmp;
     global nodeIndex_tmp;

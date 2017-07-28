@@ -1,5 +1,10 @@
 classdef MobilityGenerator
     % MOBILITYGENERATOR - Class for data mobility generation based on model
+    %   
+    % **MobilityToolbox v 0.0.1** 
+    % A project of Open Research Tools  
+    %
+    % Reference: https://openrsct.github.io/home
     %   Developed by: Igor Amorim Silva
     %   Version: 0.0.1
     %   License: MIT
@@ -16,7 +21,13 @@ classdef MobilityGenerator
     % 6 - Pathway Mobility                  (ON FUTURE RELEASES)
     % 7 - Freeway Mobility                  (ON FUTURE RELEASES)
     %
-    % See documentation for use cases
+    % 
+    % ~~~~~~~~~~~~~~~~~~ HELP US MAINTAIN THIS PROJECT ~~~~~~~~~~~~~~~~~~~~
+    %
+    %  PLEASE DONATE AT => https://openrsct.github.io/mobilitytoolbox             
+    %
+    % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
     properties
         POSITION_X_INTERVAL = [0 1000];
         POSITION_Y_INTERVAL = [0 1000];
@@ -35,15 +46,13 @@ classdef MobilityGenerator
         % randomWaypointMobility - Function to generate mobility data base on random
         %                          waypoint mobility model 
         %
-        %  
-        % 
         %   Input : 
         %   * config => Struct with model configuration data. See documentation for more info
         %
         %   Ouptut :
         %   * mobility_model => generated data
         %
-        %   Example : 
+        %   **Example** : 
         %
         %   [mobility_model] = [class constructor].randomWaypointMobility(config);
         %
@@ -51,7 +60,7 @@ classdef MobilityGenerator
         %         values
         %
     if (nargin > 1) 
-              config = struct('V_POSITION_X_INTERVAL', config.POSITION_X_INTERVAL,...
+              settings = struct('V_POSITION_X_INTERVAL', config.POSITION_X_INTERVAL,...
                  'V_POSITION_Y_INTERVAL', config.POSITION_Y_INTERVAL,...
                  'V_SPEED_INTERVAL', config.SPEED_INTERVAL,...
                  'V_PAUSE_INTERVAL', config.PAUSE_INTERVAL ,...
@@ -60,7 +69,7 @@ classdef MobilityGenerator
                  'SIMULATION_TIME', config.SIMULATION_TIME,...
                  'NB_NODES', config.NUMBER_OF_USERS);   
              else
-              config = struct('V_POSITION_X_INTERVAL', obj.POSITION_X_INTERVAL,...
+              settings = struct('V_POSITION_X_INTERVAL', obj.POSITION_X_INTERVAL,...
                  'V_POSITION_Y_INTERVAL', obj.POSITION_Y_INTERVAL,...
                  'V_SPEED_INTERVAL', obj.SPEED_INTERVAL,...
                  'V_PAUSE_INTERVAL', obj.PAUSE_INTERVAL ,...
@@ -69,7 +78,7 @@ classdef MobilityGenerator
                  'SIMULATION_TIME', obj.SIMULATION_TIME,...
                  'NB_NODES', obj.NUMBER_OF_USERS);        
     end
-        mobility_model = randomWaypoint(config);
+        mobility_model = randomWaypointHelper(settings);
     end
         
         

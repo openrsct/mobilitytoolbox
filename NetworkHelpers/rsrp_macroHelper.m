@@ -7,7 +7,7 @@
 %c) Antenna Gain (dBi)
 % RSRP = EIRP (dBm) - Loss
 
-%<Transmit Power> - Cable Loss + Antenna Gain = EIRP
+% <Transmit Power> - Cable Loss + Antenna Gain = EIRP
 % 
 % Input---
 % data => dados carregados de arquivo .mat
